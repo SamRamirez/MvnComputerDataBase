@@ -21,8 +21,7 @@ public class ComputerDAO {
 	private final JdbcTemplate jdbcTemplate;  
 	private final ComputerRowMapper computerRowMapper;
 	
-	
-	private ComputerDAO(JdbcTemplate jdbcTemplate, ComputerRowMapper computerRowMapper) {
+	public ComputerDAO(JdbcTemplate jdbcTemplate, ComputerRowMapper computerRowMapper) {
 		this.jdbcTemplate = jdbcTemplate;
 		this.computerRowMapper = computerRowMapper;
 	}

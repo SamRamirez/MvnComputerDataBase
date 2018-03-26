@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -23,7 +23,7 @@ import com.excilys.sramirez.formation.MvnComputerDataBase.bean.Computer;
 import com.excilys.sramirez.formation.MvnComputerDataBase.mapper.ComputerMapper;
 import com.excilys.sramirez.formation.MvnComputerDataBase.service.ComputerService;
 
-//@Controller
+@Controller
 @WebServlet("/ServletDashboard")
 public class ServletDashboard extends HttpServlet {
 	
@@ -32,8 +32,14 @@ public class ServletDashboard extends HttpServlet {
 	//@Autowired
 	private ComputerService computerService;
 	
-	@Autowired
+	//@Autowired
 	private ComputerMapper computerMapper;
+	
+	public ServletDashboard(ComputerService computerService, ComputerMapper computerMapper) {
+		this.computerMapper = computerMapper;
+		System.out.println("Je suis passé par ici");
+		this.computerService = computerService;
+	}
 	
 	
 	int firstPage = 1;
@@ -42,6 +48,15 @@ public class ServletDashboard extends HttpServlet {
 	int nbAcessiblePages = 5;
 
 
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		ServletContext servletContext = config.getServletContext();
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+	    AutowireCapableBeanFactory autowireCapableBeanFactory = webApplicationContext.getAutowireCapableBeanFactory();
+	    autowireCapableBeanFactory.autowireBean(this);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void listComputersFilterOrOrderedOrNot(HttpServletRequest request, int page){
 		 ArrayList<ComputerDTO> list = new ArrayList<ComputerDTO>();
@@ -134,17 +149,5 @@ public class ServletDashboard extends HttpServlet {
 			
 			response.sendRedirect("ServletDashboard");
 	}
-		
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		ServletContext servletContext = config.getServletContext();
-		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-	    AutowireCapableBeanFactory autowireCapableBeanFactory = webApplicationContext.getAutowireCapableBeanFactory();
-	    autowireCapableBeanFactory.autowireBean(this);
-	}
-
-
-	
 
 }
