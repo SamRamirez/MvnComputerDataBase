@@ -144,7 +144,4 @@ public class ServletDashboard extends HttpServlet {
 	    autowireCapableBeanFactory.autowireBean(this);
 	}
 
-
-	
-
 }
