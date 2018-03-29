@@ -1,27 +1,43 @@
 package com.excilys.sramirez.formation.MvnComputerDataBase.bean;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "computer")
 public class Computer extends Element{
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(nullable = false)
 	private String name;
+	@Column
 	private LocalDate introduced;
+	@Column
 	private LocalDate discontinued;
-	//private int companyId;
+	@ManyToOne
 	private Company company = new Company();
 	
 
 
 
-public Computer(ComputerBuilder computerBuilder) {
-        
-        this.setId(computerBuilder.id);
-        this.setName(computerBuilder.name);
-        this.setIntroduced(computerBuilder.introduced);
-        this.setDiscontinued(computerBuilder.discontinued);
-        this.setCompany(computerBuilder.company);
-        
-    }
+	public Computer(ComputerBuilder computerBuilder) {
+
+		this.setId(computerBuilder.id);
+		this.setName(computerBuilder.name);
+		this.setIntroduced(computerBuilder.introduced);
+		this.setDiscontinued(computerBuilder.discontinued);
+		this.setCompany(computerBuilder.company);
+
+	}
     
     
     /**

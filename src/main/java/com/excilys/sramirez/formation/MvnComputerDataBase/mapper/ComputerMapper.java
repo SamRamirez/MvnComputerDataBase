@@ -56,8 +56,8 @@ public class ComputerMapper {
 		computerDTO.setName(computer.getName());
 		computerDTO.setIntroduced(computer.getIntroduced() == null ? null : computer.getIntroduced().toString());
 		computerDTO.setDiscontinued(computer.getDiscontinued() == null ? null : computer.getDiscontinued().toString());
-		computerDTO.setCompanyId(computer.getCompany().getId());
-		computerDTO.setCompanyName(computer.getCompany().getName());
+		computerDTO.setCompanyId(computer.getCompany() == null ? 1 : computer.getCompany().getId());
+		computerDTO.setCompanyName(computer.getCompany() == null ? "null" : computer.getCompany().getName());
 		return computerDTO;
 	}
 	

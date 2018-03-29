@@ -1,15 +1,19 @@
 package com.excilys.sramirez.formation.MvnComputerDataBase.DAO;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.excilys.sramirez.formation.MvnComputerDataBase.bean.Computer;
+import com.excilys.sramirez.formation.MvnComputerDataBase.config.HibernateConfig;
  
 
 
@@ -40,8 +44,20 @@ public class ComputerDAO {
 		return jdbcTemplate.queryForObject(queryCountComputers, Integer.class);
 	}
 	
+//	public List<Computer> list(int page, int numberOfElements){
+//		return jdbcTemplate.query(queryListComputers, new Object[] {10*(page-1), numberOfElements}, computerRowMapper);
+//	}
+	
 	public List<Computer> list(int page, int numberOfElements){
-		return jdbcTemplate.query(queryListComputers, new Object[] {10*(page-1), numberOfElements}, computerRowMapper);
+		List<Computer> listComputers = new ArrayList<Computer>();
+		
+		try(Session session = HibernateConfig.getSessionFactory().openSession();){
+			Query<Computer> query = session.createQuery("SELECT computer from Computer computer", Computer.class);
+			query.setMaxResults(1);
+			query.setFirstResult(10);
+			listComputers = query.list();
+		}
+		return listComputers;
 	}
 	
 	public List<Computer> listFiltered(int page, int numberOfElements, String filter){

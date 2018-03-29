@@ -1,14 +1,29 @@
 package com.excilys.sramirez.formation.MvnComputerDataBase.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "company")
 public class Company extends Element{
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
 	private int id;
+	
+	@Column(nullable = false)
 	private String name;
 	
 	
 	public Company() {
 	}
 
+	
 	public Company(int id, String name) {
 		this.id=id;
 		this.name=name;

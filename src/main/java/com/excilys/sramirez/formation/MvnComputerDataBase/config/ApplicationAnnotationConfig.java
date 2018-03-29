@@ -1,4 +1,4 @@
-package com.excilys.sramirez.formation.MvnComputerDataBase.spring;
+package com.excilys.sramirez.formation.MvnComputerDataBase.config;
 
 
 import org.springframework.context.annotation.Configuration;
