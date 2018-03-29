@@ -13,7 +13,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="ServletDashboard"> Application - Computer Database </a>
+            <a class="navbar-brand" href="dashboard"> Application - Computer Database </a>
         </div>
     </header>
     <section id="main">
@@ -26,7 +26,7 @@
                     <h1>Edit Computer</h1>
 
 <!--                     <form action="editComputer" method="POST"> -->
-					<form action="ServletEdit" method="POST">
+					<form action="edit" method="POST">
                         <input type="hidden" value="${ id}" id="id" name="id"/> <!-- TODO: Change this value with the computer id -->
                         <fieldset>
                             <div class="form-group">
@@ -57,7 +57,7 @@
                         <div class="actions pull-right">
                             <input type="submit" value="Edit" class="btn btn-primary">
                             or
-                            <a href="ServletDashboard" class="btn btn-default">Cancel</a>
+                            <a href="dashboard" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
                 </div>

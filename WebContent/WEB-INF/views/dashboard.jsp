@@ -14,7 +14,9 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="ServletDashboard"> Application - Computer Database </a>
+            <a class="navbar-brand" href="dashboard"> Application - Computer Database </a>
+            <!--   <a class="navbar-brand" href="ServletDashboard"> Application - Computer Database </a> -->
+            
         </div>
     </header>
 
@@ -30,7 +32,9 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="ServletDashboard" method="GET" class="form-inline">
+                    <!--  <form id="searchForm" action="ServletDashboard" method="GET" class="form-inline"> -->
+                    <form id="searchForm" action="dashboard" method="GET" class="form-inline">
+                    
 						<c:if test = "${filter != null && filter != \"\"}">
 						    <input type="search" id="searchbox" name="filter" class="form-control" placeholder="${filter}" />
 							<input type="submit" id="searchsubmit" value="Filter Reset" class="btn btn-primary" />
@@ -46,14 +50,14 @@
                 </div>
                 <div class="pull-right">
 
-                	<a class="btn btn-success" id="addComputer" href="ServletAddComputer">Add Computer</a>
-                
+                	<!--  <a class="btn btn-success" id="addComputer" href="ServletAddComputer">Add Computer</a> -->
+                	<a class="btn btn-success" id="addComputer" href="add">Add Computer</a>
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
 
-        <form id="deleteForm" action="#" method="POST">
+        <form id="deleteForm" action="dashboard" method="POST">
             <input type="hidden" name="selection" value="">
         </form>
 
@@ -67,7 +71,7 @@
                         <th class="editMode" style="width: 60px; height: 22px;">
                             <input type="checkbox" id="selectall" /> 
                             <span style="vertical-align: top;">
-                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
+                                 -  <a id="deleteSelected" onclick="$.fn.deleteSelected();">
                                         <i class="fa fa-trash-o fa-lg"></i>
                                     </a>
                             </span>
@@ -90,12 +94,20 @@
 
 
 
-						<th><a href="ServletDashboard?orderType=computer.name">Computer name</a></th>
-						<th><a href="ServletDashboard?orderType=introduced">Introduced
+<!-- 						<th><a href="ServletDashboard?orderType=computer.name">Computer name</a></th> -->
+<!-- 						<th><a href="ServletDashboard?orderType=introduced">Introduced -->
+<!-- 								date</a></th> -->
+<!-- 						<th><a href="ServletDashboard?orderType=discontinued">Discontinued -->
+<!-- 								date</a></th> -->
+<!-- 						<th><a href="ServletDashboard?orderType=computer.company_Id">Company</a></th> -->
+
+						<th><a href="dashboard?orderType=computer.name">Computer
+								name</a></th>
+						<th><a href="dashboard?orderType=introduced">Introduced
 								date</a></th>
-						<th><a href="ServletDashboard?orderType=discontinued">Discontinued
+						<th><a href="dashboard?orderType=discontinued">Discontinued
 								date</a></th>
-						<th><a href="ServletDashboard?orderType=computer.company_Id">Company</a></th>
+						<th><a href="dashboard?orderType=computer.company_Id">Company</a></th>
 
 
 					</tr>
@@ -111,7 +123,7 @@
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value="${entry.id }"></td>
 							<!-- 							<tr> -->
-							<td><a href="ServletEdit?id=${entry.id }" onclick="">${entry.name}</a>
+							<td><a href="edit?id=${entry.id }" onclick="">${entry.name}</a>
 							</td>
 							<td>${entry.introduced}</td>
 							<td>${entry.discontinued}</td>
@@ -138,8 +150,8 @@
 
 
 				<c:if test = "${localisationPages > 5}">
-					<li><a
-						href="ServletDashboard?localisationNext=${localisationNext - 5 }&page=${page}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"> 5 previous pages </a>
+					<li><a href="dashboard?localisationNext=${localisationNext - 5 }&page=${page}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"> 5 previous pages </a>
+<%-- 						<a href="ServletDashboard?localisationNext=${localisationNext - 5 }&page=${page}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"> 5 previous pages </a> --%>
 					</li>
 				</c:if>
 				
@@ -150,36 +162,57 @@
 <%-- 				</c:if> --%>
 
 				<c:if test="${localisationPages > 1}">
-					<li><a
-						href="ServletDashboard?localisationNext=${localisationNext}&page=${page-1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"
+					<li>
+					<a
+						href="dashboard?localisationNext=${localisationNext}&page=${page-1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+<!-- 						<a -->
+<%-- 						href="ServletDashboard?localisationNext=${localisationNext}&page=${page-1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}" --%>
+<!-- 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a> -->
 					</li>
 				</c:if>
 
 
 				<c:if test="${ (localisationPages + 4) <= (maxPage) }">
 					<c:forEach var="i" begin="${localisationPages}" end="${ localisationPages + 4}">
-						<li><a
-							href="ServletDashboard?page=${i}&localisationPages=${localisationPages}&localisationNext=${localisationNext}&filter=${filter}&orderType=${orderType}">${i}</a></li>
+						<li>
+<!-- 						<a -->
+<%-- 							href="ServletDashboard?page=${i}&localisationPages=${localisationPages}&localisationNext=${localisationNext}&filter=${filter}&orderType=${orderType}">${i}</a> --%>
+							
+							<a
+							href="dashboard?page=${i}&localisationPages=${localisationPages}&localisationNext=${localisationNext}&filter=${filter}&orderType=${orderType}">${i}</a>
+							</li>
 					</c:forEach>
 				</c:if>
 				<!--else -->
 				<c:if test="${ (localisationPages + 4) > maxPage}">
 				<c:forEach var="i" begin="${localisationPages}" end="${maxPage}">
-						<li><a
-							href="ServletDashboard?page=${i}&localisationPages=${localisationPages}&localisationNext=${localisationNext}&filter=${filter}&orderType=${orderType}">${i}</a></li>
+						<li>
+<!-- 						<a -->
+<%-- 							href="ServletDashboard?page=${i}&localisationPages=${localisationPages}&localisationNext=${localisationNext}&filter=${filter}&orderType=${orderType}">${i}</a> --%>
+							
+							<a
+							href="dashboard?page=${i}&localisationPages=${localisationPages}&localisationNext=${localisationNext}&filter=${filter}&orderType=${orderType}">${i}</a>
+							</li>
 					</c:forEach>
 				</c:if>
 				
 				<c:if test = "${ localisationPages < maxPage}">
-					<li><a
-						href="ServletDashboard?localisationNext=${localisationNext}&page=${page + 1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}" aria-label="Next"> 
+					<li>
+<!-- 					<a -->
+<%-- 						href="ServletDashboard?localisationNext=${localisationNext}&page=${page + 1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}" aria-label="Next">  --%>
+						
+						<a
+						href="dashboard?localisationNext=${localisationNext}&page=${page + 1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}" aria-label="Next">
                      <span aria-hidden="true">&raquo;</span></a></li>
 				</c:if>
 
 
 				<c:if test = "${(localisationPages + 4) <= maxPage}">
-					<li><a href="ServletDashboard?localisationNext=${localisationNext + 5 }&page=${page}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"> 5 next pages </a></li>
+					<li>
+<%-- 					<a href="ServletDashboard?localisationNext=${localisationNext + 5 }&page=${page}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"> 5 next pages </a> --%>
+					<a href="dashboard?localisationNext=${localisationNext + 5 }&page=${page}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"> 5 next pages </a>
+					</li>
 				</c:if>
 
 				<!--               <li> -->
@@ -193,28 +226,34 @@
 			<div class="btn-group btn-group-sm pull-right" role="group">
 			
 			<input type="button" class="btn btn-default"
-						onclick="location.href='ServletDashboard?page=1&localisationNext=0'"
-						value="1" />
+						onclick="location.href='dashboard?page=1&localisationNext=0'" value="1" />
+<!-- 						onclick="location.href='ServletDashboard?page=1&localisationNext=0'" -->
+						
 
 				<c:if test="${ (maxPage)>=10 }">
 					<input type="button" class="btn btn-default"
-						onclick="location.href='ServletDashboard?page=10&localisationNext=10'"
+						onclick="location.href='dashboard?page=10&localisationNext=10'"
 						value="10" />
+<!-- 						onclick="location.href='ServletDashboard?page=10&localisationNext=10'" -->
 				</c:if>
 				<c:if test="${ (maxPage)>=50 }">
 					<input type="button" class="btn btn-default"
-						onclick="location.href='ServletDashboard?page=50&localisationNext=50'"
+						onclick="location.href='dashboard?page=50&localisationNext=50'"
 						value="50" />
+<!-- 						onclick="location.href='ServletDashboard?page=50&localisationNext=50'" -->
 				</c:if>
 				<c:if test="${ (maxPage)>=100 }">
 					<input type="button" class="btn btn-default"
-						onclick="location.href='ServletDashboard?page=100&localisationNext=100'"
+						onclick="location.href='dashboard?page=100&localisationNext=100'"
 						value="100" />
+<!-- 						onclick="location.href='ServletDashboard?page=100&localisationNext=100'" -->
 				</c:if>
 				
 				<input type="button" class="btn btn-default"
-						onclick="location.href='ServletDashboard?page=${maxPage}&localisationNext=${maxPage}'"
+						onclick="location.href='dashboard?page=${maxPage}&localisationNext=${maxPage}'"
 						value="LastPage" />
+<%-- 						onclick="location.href='ServletDashboard?page=${maxPage}&localisationNext=${maxPage}'" --%>
+						
 
 				<!--             <button type="button" class="btn btn-default">50</button> -->
 				<!--             <button type="button" class="btn btn-default">100</button> -->

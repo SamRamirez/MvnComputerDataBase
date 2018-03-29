@@ -53,15 +53,17 @@ public class ComputerDAO {
 	}
 
 	public void create(Computer comp) {
-		jdbcTemplate.update(queryCreateComputer, comp.getName(), comp.getIntroduced(), comp.getDiscontinued(), comp.getCompany());
+		jdbcTemplate.update(queryCreateComputer, comp.getName(), comp.getIntroduced(), comp.getDiscontinued(), comp.getCompany().getId());
 	}
 	
 	public Optional<Computer> info(int id) {
 		return Optional.ofNullable(jdbcTemplate.queryForObject(queryInfoComputer, new Object[] {id}, computerRowMapper));
 	}
 
-	public Computer update(Computer comp) {
-		return jdbcTemplate.queryForObject(queryUpdateComputer, new Object[] {comp.getName(), Date.valueOf(comp.getIntroduced()), Date.valueOf(comp.getDiscontinued()), comp.getCompany().getId(), comp.getId()}, computerRowMapper);
+	public void update(Computer comp) {
+		//return jdbcTemplate.queryForObject(queryUpdateComputer, new Object[] {comp.getName(), Date.valueOf(comp.getIntroduced()), Date.valueOf(comp.getDiscontinued()), comp.getCompany().getId(), comp.getId()}, computerRowMapper);
+		jdbcTemplate.update(queryUpdateComputer, comp.getName(), Date.valueOf(comp.getIntroduced()), Date.valueOf(comp.getDiscontinued()), comp.getCompany().getId(), comp.getId()/*, computerRowMapper*/);
+
 	}
 	
 	public void delete(int id) {
