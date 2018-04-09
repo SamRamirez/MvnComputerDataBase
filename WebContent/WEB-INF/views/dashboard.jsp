@@ -107,7 +107,7 @@
 								date</a></th>
 						<th><a href="dashboard?orderType=discontinued">Discontinued
 								date</a></th>
-						<th><a href="dashboard?orderType=computer.company_Id">Company</a></th>
+						<th><a href="dashboard?orderType=computer.company.id">Company</a></th>
 
 
 					</tr>
@@ -161,7 +161,7 @@
 <!-- 					</li> -->
 <%-- 				</c:if> --%>
 
-				<c:if test="${localisationPages > 1}">
+				<c:if test="${page > 1}">
 					<li>
 					<a
 						href="dashboard?localisationNext=${localisationNext}&page=${page-1}&localisationPages=${localisationPages}&filter=${filter}&orderType=${orderType}"

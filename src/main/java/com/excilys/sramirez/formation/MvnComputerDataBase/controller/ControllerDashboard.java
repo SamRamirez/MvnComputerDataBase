@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,16 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.excilys.sramirez.formation.MvnComputerDataBase.DTO.CompanyDTO;
 import com.excilys.sramirez.formation.MvnComputerDataBase.DTO.ComputerDTO;
+import com.excilys.sramirez.formation.MvnComputerDataBase.bean.Company;
 import com.excilys.sramirez.formation.MvnComputerDataBase.bean.Computer;
 import com.excilys.sramirez.formation.MvnComputerDataBase.mapper.CompanyMapper;
 import com.excilys.sramirez.formation.MvnComputerDataBase.mapper.ComputerMapper;
-import com.excilys.sramirez.formation.MvnComputerDataBase.service.ComputerService;
-
 import com.excilys.sramirez.formation.MvnComputerDataBase.service.CompanyService;
-
-import com.excilys.sramirez.formation.MvnComputerDataBase.DTO.CompanyDTO;
-import com.excilys.sramirez.formation.MvnComputerDataBase.bean.Company;
+import com.excilys.sramirez.formation.MvnComputerDataBase.service.ComputerService;
 
 @Controller
 //@WebServlet("/ServletDashboard")
@@ -102,6 +98,7 @@ public class ControllerDashboard {
 			maxPage = (nbCompu / nbEltsPerPage);
 		}
 		model.addAttribute("maxPage", maxPage);
+		System.out.println("maxPage = " + maxPage);
 		model.addAttribute("nbCompu", nbCompu);		
 
 		//on va passer les liens vers les pages suivantes à la jsp
@@ -133,6 +130,7 @@ public class ControllerDashboard {
 		localisationPages+=localisationNext;
 		model.addAttribute("localisationPages", localisationPages);
 
+		System.out.println(localisationPages);
 		return "dashboard";
 		//this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request,  response);
 	}
@@ -198,8 +196,8 @@ public class ControllerDashboard {
 		System.out.println(c.toString());
 		System.out.println(computerService);
 		computerService.create(c.getName(), c.getIntroduced(), c.getDiscontinued(), c.getCompany());
-
-		return "addComputer";
+		listComputersFilterOrOrderedOrNot(model, params, firstPage);
+		return "dashboard";
 		//this.getServletContext().getRequestDispatcher("/WEB-INF/views/addComputer.jsp").forward(request,  response);
 	}
 	

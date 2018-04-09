@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,10 +24,11 @@ public class Computer extends Element{
 	private LocalDate introduced;
 	@Column
 	private LocalDate discontinued;
-	@ManyToOne
+	@ManyToOne()
+	@JoinColumn(name = "company_id")
 	private Company company = new Company();
 	
-
+//eager/fetch/lazy
 
 
 	public Computer(ComputerBuilder computerBuilder) {
