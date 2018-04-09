@@ -1,6 +1,5 @@
 package com.excilys.sramirez.formation.MvnComputerDataBase.DAO;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.excilys.sramirez.formation.MvnComputerDataBase.bean.Computer;
@@ -22,17 +20,16 @@ public class ComputerDAO {
 	
 	private static final Logger logger = LogManager.getLogger(ComputerDAO.class);
 	
-	private final JdbcTemplate jdbcTemplate;  
-	private final ComputerRowMapper computerRowMapper;
+	//private final JdbcTemplate jdbcTemplate;  
+	//private final ComputerRowMapper computerRowMapper;
 	
 	
-	private ComputerDAO(JdbcTemplate jdbcTemplate, ComputerRowMapper computerRowMapper) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.computerRowMapper = computerRowMapper;
-	}
+//	private ComputerDAO(JdbcTemplate jdbcTemplate, ComputerRowMapper computerRowMapper) {
+//		this.jdbcTemplate = jdbcTemplate;
+//		this.computerRowMapper = computerRowMapper;
+//	}
 
 	String hqlList = "SELECT computer from Computer computer";
-	String hqlCreate = "INSERT INTO computer (name, introduced, discontinued, company_id)  VALUES (?, ?, ?, ?)";
 	String hqlCount = "SELECT count(*) from Computer";
 	String hqlInfo = "SELECT computer from Computer computer where computer.id = :id";
 	
@@ -131,22 +128,45 @@ public class ComputerDAO {
 		}	
 	}
 	
+	public Computer computerFromId(int id) {
+		System.out.println("info de DAO appelé");
+		try(Session session = HibernateConfig.getSessionFactory().openSession();){
+			Query<Computer> query = session.createQuery(hqlInfo, Computer.class);
+			query.setParameter("id", id);
+			Computer reponse = query.uniqueResult();
+			return reponse;
+		}	
+	}
+	
 //	public void update(Computer comp) {
 //		//return jdbcTemplate.queryForObject(queryUpdateComputer, new Object[] {comp.getName(), Date.valueOf(comp.getIntroduced()), Date.valueOf(comp.getDiscontinued()), comp.getCompany().getId(), comp.getId()}, computerRowMapper);
 //		jdbcTemplate.update(queryUpdateComputer, comp.getName(), Date.valueOf(comp.getIntroduced()), Date.valueOf(comp.getDiscontinued()), comp.getCompany().getId(), comp.getId()/*, computerRowMapper*/);
 //	}
 	
-	public void update(Computer comp) {
-		try(Session session = HibernateConfig.getSessionFactory().openSession();)  {
-			session.beginTransaction();
-			session.createQuery("UPDATE computer SET name = :name, introduced = :introduced, discontinued = :discontinued, company_id = :company_id WHERE id = :id")
-					.setParameter("name", comp.getName())
-					.setParameter("introduced", comp.getIntroduced())
-					.setParameter("discontinued", comp.getDiscontinued())
-					.setParameter("company", comp.getCompany().getId() != 0? comp.getCompany().getId() : null)
-					.setParameter("id", comp.getId())
-					.executeUpdate();
-			session.getTransaction().commit();
+//	public void update(Computer comp) {
+//		try(Session session = HibernateConfig.getSessionFactory().openSession();)  {
+//			session.beginTransaction();
+//			session.createQuery("UPDATE computer SET name = :name, introduced = :introduced, discontinued = :discontinued, company_id = :company_id WHERE id = :id")
+//					.setParameter("name", comp.getName())
+//					.setParameter("introduced", comp.getIntroduced())
+//					.setParameter("discontinued", comp.getDiscontinued())
+//					.setParameter("company", comp.getCompany().getId() != 0? comp.getCompany().getId() : null)
+//					.setParameter("id", comp.getId())
+//					.executeUpdate();
+//			session.getTransaction().commit();
+//		}
+//	}
+	
+	
+	public void update(Computer ucomputer) {
+		if (this.info(ucomputer.getId()) != null) { 
+			try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+				session.beginTransaction();
+				session.update(ucomputer);
+				session.getTransaction().commit();
+			}
+		} else {
+			logger.error("Pas d'ordinateur reçu à mettre à jour");
 		}
 	}
 	
@@ -154,10 +174,18 @@ public class ComputerDAO {
 //		jdbcTemplate.update(queryDeleteComputer, id);
 //	}
 	
+//	public void delete(int id) {
+//		try(Session session = HibernateConfig.getSessionFactory().openSession();)  {
+//			session.beginTransaction();
+//			session.createQuery("DELETE from computer WHERE id = :id").setParameter("id", id).executeUpdate();
+//			session.getTransaction().commit();
+//		}
+//	}
+	
 	public void delete(int id) {
 		try(Session session = HibernateConfig.getSessionFactory().openSession();)  {
 			session.beginTransaction();
-			session.createQuery("DELETE from computer WHERE id = :id").setParameter("id", id).executeUpdate();
+			session.delete(this.computerFromId(id));
 			session.getTransaction().commit();
 		}
 	}
