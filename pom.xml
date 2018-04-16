@@ -1,15 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.excilys.sramirez.formation</groupId>
-	<artifactId>MvnComputerDataBase</artifactId>
+	<artifactId>MvnComputerDataBaseMultiModule</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
+
+	<name> MvnComputerDataBaseMultiModule </name>
+	<url> http://maven.apache.org </url>
+
+	<modules>
+		<module>core</module>
+		<module>persistence</module>
+		<module>service</module>
+		<module>webapp</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mainClass>com.excilys.formation.cdb.IHM</mainClass>
+		<powermock.version>1.7.1</powermock.version>
+		<spring>5.0.4.RELEASE</spring>
+		<maven-compiler-plugin>3.7.0</maven-compiler-plugin>
+		<maven-war-plugin>2.6</maven-war-plugin>
+		<mysql-connector-java>5.1.45</mysql-connector-java>
+		<log4j-core>2.10.0</log4j-core>
+		<log4j-api>2.10.0</log4j-api>
+		<log4j-iostreams>2.10.0</log4j-iostreams>
+		<taglibs>1.1.2</taglibs>
+		<javax.servlet-api>3.1.0</javax.servlet-api>
+		<javax.servlet-jstl>1.2</javax.servlet-jstl>
+		<HikariCP>2.7.8</HikariCP>
+		<hibernate-core>5.2.4.Final</hibernate-core>
+		<hibernate-validator>5.2.4.Final</hibernate-validator>
+		<maven-compiler-plugin>3.7.0</maven-compiler-plugin>
+		<maven-war-plugin>2.6</maven-war-plugin>
+		<slf4j-api>1.7.25</slf4j-api>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- === Modules === -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>persistence</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>webapp</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>console</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- === slf4j === -->
+
+			<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j-api}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.7.25</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.slf4j</groupId> -->
+<!-- 				<artifactId>slf4j-simple</artifactId> -->
+<!-- 				<version>1.7.25</version> -->
+<!-- 			</dependency> -->
+
+			<!-- === log4j === -->
+
+			<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${log4j-core}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>${log4j-api}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-iostreams</artifactId>
+				<version>${log4j-iostreams}</version>
+			</dependency>
+
+			<!-- === hibernate === -->
+
+			<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate-core}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator}</version>
+			</dependency>
+
+			<!-- === Spring === -->
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring}</version>
+			</dependency>
+
+			<!-- === HikariCP === -->
+
+			<!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+			<dependency>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP</artifactId>
+				<version>${HikariCP}</version>
+			</dependency>
+
+			<!-- === mysql === -->
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector-java}</version>
+			</dependency>
+
+			<!-- === taglibs === -->
+
+			<!-- https://mvnrepository.com/artifact/taglibs/standard -->
+			<dependency>
+				<groupId>taglibs</groupId>
+				<artifactId>standard</artifactId>
+				<version>${taglibs}</version>
+			</dependency>
+
+			<!-- === Sevlvet === -->
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet-api}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${javax.servlet-jstl}</version>
+			</dependency>
+
+			<!-- === powermock === -->
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<version>${powermock.version}</version>
+				<!-- <scope>test</scope> -->
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-mockito</artifactId>
+				<version>${powermock.version}</version>
+				<!-- <scope>test</scope> -->
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+			<!-- <dependency> -->
+			<!-- <groupId>org.hibernate</groupId> -->
+			<!-- <artifactId>hibernate-core</artifactId> -->
+			<!-- <version>5.2.10.Final</version> -->
+			<!-- </dependency> -->
+
+			<!-- <dependency> -->
+			<!-- <groupId>org.hibernate</groupId> -->
+			<!-- <artifactId>hibernate-validator</artifactId> -->
+			<!-- <version>5.4.1.Final</version> -->
+			<!-- </dependency> -->
+
+			<!-- <dependency> <groupId>org.apache.tomcat</groupId> <artifactId>jasper</artifactId> 
+				<version>6.0.32</version> </dependency> -->
+
+			<!-- <dependency> -->
+			<!-- <groupId>org.springframework</groupId> -->
+			<!-- <artifactId>spring-aop</artifactId> -->
+			<!-- <version>${spring}</version> -->
+			<!-- </dependency> -->
+
+			<!-- <dependency> -->
+			<!-- <groupId>org.springframework</groupId> -->
+			<!-- <artifactId>spring-context</artifactId> -->
+			<!-- <version>${spring}</version> -->
+			<!-- </dependency> -->
+
+			<!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+			<!-- <dependency> -->
+			<!-- <groupId>org.hsqldb</groupId> -->
+			<!-- <artifactId>hsqldb</artifactId> -->
+			<!-- <version>2.4.0</version> -->
+			<!-- <scope>test</scope> -->
+			<!-- </dependency> -->
+
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>${maven-compiler-plugin}</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -19,160 +262,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>${maven-war-plugin}</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mainClass>com.excilys.formation.cdb.IHM</mainClass>
-		<powermock.version>1.7.1</powermock.version>
-		<spring>5.0.4.RELEASE</spring>
-		<!-- <failOnMissingWebXml>false</failOnMissingWebXml> -->
-	</properties>
-
-	<dependencies>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<!-- <version>8.0.9-rc</version> -->
-			<version>5.1.45</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<!-- <scope>test</scope> -->
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>2.4.0</version>
-			<!-- <scope>test</scope> -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-module-junit4</artifactId>
-			<version>${powermock.version}</version>
-			<!-- <scope>test</scope> -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito</artifactId>
-			<version>${powermock.version}</version>
-			<!-- <scope>test</scope> -->
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.10.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.10.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-iostreams</artifactId>
-			<version>2.10.0</version>
-		</dependency>
-
-
-		<!-- <dependency> <groupId>org.apache.tomcat</groupId> <artifactId>jasper</artifactId> 
-			<version>6.0.32</version> </dependency> -->
-
-
-		<!-- https://mvnrepository.com/artifact/taglibs/standard -->
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>2.7.8</version>
-		</dependency>
-
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework</groupId> -->
-		<!-- <artifactId>spring-context</artifactId> -->
-		<!-- <version>${spring}</version> -->
-		<!-- </dependency> -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring}</version>
-		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework</groupId> -->
-		<!-- <artifactId>spring-aop</artifactId> -->
-		<!-- <version>${spring}</version> -->
-		<!-- </dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring}</version>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>5.0.4.RELEASE</version>
-		</dependency>
-
-	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-core</artifactId>
-		<version>5.2.10.Final</version>
-	</dependency>
-	
-	<dependency>
- 			<groupId>org.hibernate</groupId>
- 			<artifactId>hibernate-validator</artifactId>
- 			<version>5.4.1.Final</version>
- 		</dependency>
-
-
-
-	</dependencies>
-
 </project>
